@@ -6,22 +6,18 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 int main()
 {
+    // Initialize GLFW
     glfwInit();
-    glfwWindowHint(GLFW_CONTENT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTENT_VERSION_MINOR, 3); // so version 3.3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // so version 3.3
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     // make our window resizeable
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfGetProcAddress))
-    {
-        std::cout << "Failed Init Glad" << std::endl;
-        return -1;
-    }
-
     GLFWwindow* window = glfwCreateWindow(1920, 1080, "Text", NULL, NULL);
+
     if (window == NULL)
     {
         std::cout << "Failed to create window" << std::endl;
@@ -29,7 +25,14 @@ int main()
         return -1;
     }
 
-    glfwMakeContextCurrent(window); // if you have multiple windows open, you don't know which one to draw into --> this tells the program
+    // if you have multiple windows open, you don't know which one to draw into --> this tells the program
+    glfwMakeContextCurrent(window); 
+    
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed Init Glad" << std::endl;
+        return -1;
+    }
 
     // glViewport(0, 0, 1920, 1080); // window holds together all vars in opengl context but isn't the rendering 
     // viewport is what opengl is actually rendering to 
